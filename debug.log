@@ -1,0 +1,4 @@
+[1209/111550.239:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1209/121941.951:ERROR:process_info.cc(359)] UncheckedAllocate
+[1209/122052.714:ERROR:process_info.cc(359)] UncheckedAllocate
+[1209/122052.774:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\khalaharia\AppData\Local\Google\Chrome\User Data\Crashpad\reports\d93711bd-67d1-467c-80ba-229dd48cd3f5.dmp: El proceso no tiene acceso al archivo porque está siendo utilizado por otro proceso. (0x20)

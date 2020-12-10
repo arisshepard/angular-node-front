@@ -1,0 +1,81 @@
+<h1>
+  Customer <small>{{ title }}</small>
+</h1>
+<div class="row text-right mb-3">
+  <div class="col">
+    <button routerLink="/customers" class="btn btn-danger">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+  </div>
+</div>
+
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="First Name"
+      [class.is-invalid]="invalidField('firstname')"
+      formControlName="firstname"
+    />
+    <label class="form-label">First Name</label>
+    <small class="form-text text-danger" *ngIf="invalidField('firstname')"
+      >First name should be 5 letters at least</small
+    >
+  </div>
+
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Last Name"
+      [class.is-invalid]="invalidField('lastname')"
+      formControlName="lastname"
+    />
+    <label class="form-label">Last Name</label>
+    <small class="form-text text-danger" *ngIf="invalidField('lastname')"
+      >Last name should be 5 letters at least</small
+    >
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      name="address"
+      placeholder="Address"
+      [class.is-invalid]="invalidField('address')"
+      formControlName="address"
+    />
+    <label class="form-label">Address</label>
+    <small class="form-text text-danger" *ngIf="invalidField('address')"
+      >Address should be 5 letters at least</small
+    >
+  </div>
+  <div class="row g-3">
+    <div class="mb-3 col-sm-2">
+      <label class="form-label">Age</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Age"
+        [class.is-invalid]="invalidField('age')"
+        formControlName="age"
+      />
+      <small class="form-text text-danger" *ngIf="invalidField('age')"
+        >Age should be between 0 and 99</small
+      >
+    </div>
+  </div>
+
+  <div class="row text-right">
+    <div class="col">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        {{ action }}
+      </button>
+    </div>
+  </div>
+
+  <!-- <hr />
+  <pre>{{ form.getRawValue() | json }}</pre>
+  <pre>{{ customer | json }}</pre> -->
+</form>
