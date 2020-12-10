@@ -21,7 +21,7 @@ export class CustomerService {
       .post<Customer>(`${environment.URL}/customer/create`, customerTemp)
       .pipe(
         map((resp: any) => {
-          const customer: Customer = {
+          const customerResp: Customer = {
             firstname: resp.customer.firstname,
             lastname: resp.customer.lastname,
             age: resp.customer.age,
@@ -29,7 +29,7 @@ export class CustomerService {
             id: resp.customer._id,
           };
 
-          return customer;
+          return customerResp;
         })
       );
   }
@@ -89,7 +89,7 @@ export class CustomerService {
       )
       .pipe(
         map((resp: any) => {
-          const customer: Customer = {
+          const customerResp: Customer = {
             firstname: resp.customer.firstname,
             lastname: resp.customer.lastname,
             age: resp.customer.age,
@@ -97,7 +97,7 @@ export class CustomerService {
             id: resp.customer._id,
           };
 
-          return customer;
+          return customerResp;
         })
       );
   }

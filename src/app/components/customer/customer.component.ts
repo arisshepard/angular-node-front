@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
   form: FormGroup;
 
   title: string;
-  action: string = 'Submit';
+  action = 'Submit';
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +52,7 @@ export class CustomerComponent implements OnInit {
     return this.form.get(name).invalid && this.form.get(name).touched;
   }
 
-  private createForm() {
+  private createForm(): void {
     this.form = this.fb.group({
       id: [''],
       firstname: ['', [Validators.required, Validators.minLength(5)]],
@@ -64,7 +64,7 @@ export class CustomerComponent implements OnInit {
     this.form.controls.id.disable();
   }
 
-  submit() {
+  submit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((control) =>
         control.markAllAsTouched()
