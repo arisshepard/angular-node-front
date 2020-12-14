@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../../models/customer';
 import { CustomerService } from '../../services/customer.service';
 import { Observable } from 'rxjs';
@@ -28,7 +28,8 @@ export class CustomerComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: ActivatedRoute,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private route: Router
   ) {
     this.createForm();
   }
@@ -89,18 +90,31 @@ export class CustomerComponent implements OnInit {
       request = this.customerService.createCustomer(this.form.getRawValue());
     }
 
-    request.subscribe((customer: Customer) => {
-      this.customer = customer;
-      this.form.setValue(customer);
-      this.title = `${this.customer.firstname} ${this.customer.lastname}`;
+    request.subscribe(
+      (customer: Customer) => {
+        this.customer = customer;
+        this.form.setValue(customer);
+        this.title = `${this.customer.firstname} ${this.customer.lastname}`;
 
-      this.action = 'Update';
+        this.action = 'Update';
 
-      Swal.fire({
-        title: this.title,
-        text: 'Customer saved correctly',
-        icon: 'success',
-      });
-    });
+        Swal.fire({
+          title: this.title,
+          text: 'Customer saved correctly',
+          icon: 'success',
+        });
+      },
+      (err) => {
+        console.log('ERROR: ', err);
+
+        Swal.fire({
+          text: err.error.error.message,
+          title: 'Customer',
+          icon: 'error',
+        });
+
+        this.route.navigateByUrl('/login');
+      }
+    );
   }
 }

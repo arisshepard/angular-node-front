@@ -2,8 +2,15 @@
 
 <div class="row">
   <div class="col text-right">
-    <button class="btn btn-success" routerLink="/customer/new">
+    <button
+      class="btn btn-success"
+      routerLink="/customer/new"
+      [disabled]="loginService.userRole !== 'ADMIN_ROLE'"
+    >
       <i class="fas fa-plus"></i> Add
+    </button>
+    <button class="btn btn-danger ml-3" (click)="signOut()">
+      <i class="fas fa-sign-out-alt"></i> Sign Out
     </button>
   </div>
 </div>
@@ -28,10 +35,15 @@
         <button
           class="btn btn-info mr-1"
           [routerLink]="['/customer', customer.id]"
+          [disabled]="loginService.userRole !== 'ADMIN_ROLE'"
         >
           <i class="fas fa-pen"></i>
         </button>
-        <button class="btn btn-danger mr-1" (click)="deleteCustomer(customer)">
+        <button
+          class="btn btn-danger mr-1"
+          (click)="deleteCustomer(customer)"
+          [disabled]="loginService.userRole !== 'ADMIN_ROLE'"
+        >
           <i class="fas fa-trash"></i>
         </button>
       </td>

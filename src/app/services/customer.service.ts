@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,8 +17,15 @@ export class CustomerService {
 
     delete customerTemp.id;
 
+    console.log('CUSTOMER: ', customerTemp);
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ token });
+
     return this.http
-      .post<Customer>(`${environment.URL}/customer/create`, customerTemp)
+      .post<Customer>(`${environment.URL}/customer/create`, customerTemp, {
+        headers,
+      })
       .pipe(
         map((resp: any) => {
           const customerResp: Customer = {
@@ -35,24 +42,32 @@ export class CustomerService {
   }
 
   getCustomer(id: string | number): Observable<Customer> {
-    return this.http.get<Customer>(`${environment.URL}/customer/${id}`).pipe(
-      map((resp: any) => {
-        const customer: Customer = {
-          firstname: resp.customer.firstname,
-          lastname: resp.customer.lastname,
-          age: resp.customer.age,
-          address: resp.customer.address,
-          id: resp.customer._id,
-        };
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ token });
 
-        return customer;
-      })
-    );
+    return this.http
+      .get<Customer>(`${environment.URL}/customer/${id}`, { headers })
+      .pipe(
+        map((resp: any) => {
+          const customer: Customer = {
+            firstname: resp.customer.firstname,
+            lastname: resp.customer.lastname,
+            age: resp.customer.age,
+            address: resp.customer.address,
+            id: resp.customer._id,
+          };
+
+          return customer;
+        })
+      );
   }
 
   getCustomers(): Observable<Customer[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ token });
+
     return this.http
-      .get<Customer[]>(`${environment.URL}/customer/retrieveinfos`)
+      .get<Customer[]>(`${environment.URL}/customer/retrieveinfos`, { headers })
       .pipe(
         map((resp: any) => {
           return resp.customers;
@@ -74,7 +89,12 @@ export class CustomerService {
   }
 
   deleteCustomer(id: number | string): Observable<any> {
-    return this.http.delete(`${environment.URL}/customer/deletebyid/${id}`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ token });
+
+    return this.http.delete(`${environment.URL}/customer/deletebyid/${id}`, {
+      headers,
+    });
   }
 
   updateCustomer(customer: Customer): Observable<Customer> {
@@ -82,10 +102,14 @@ export class CustomerService {
 
     delete customerTemp.id;
 
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ token });
+
     return this.http
       .put<Customer>(
         `${environment.URL}/customer/updatebyid/${customer.id}`,
-        customerTemp
+        customerTemp,
+        { headers }
       )
       .pipe(
         map((resp: any) => {
